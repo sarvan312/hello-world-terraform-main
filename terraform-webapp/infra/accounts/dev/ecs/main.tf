@@ -6,8 +6,8 @@ module "vpc" {
   vpc_cidr_block = var.vpc_cidr_block
 }
 
-resource "aws_ecr_repository" "hello_world" {
-  name                 = "hello-world"
+resource "aws_ecr_repository" "hello_world=terraform" {
+  name                 = "hello-world-terraform"
   image_tag_mutability = "MUTABLE"
 
   image_scanning_configuration {
@@ -149,14 +149,11 @@ resource "aws_ecs_service" "hello" {
   load_balancer {
     target_group_arn = aws_lb_target_group.hello_lb_tg.arn
     container_name   = jsondecode(aws_ecs_task_definition.hello[0].container_definitions)[0].name
-    container_port   = 3000
+    container_port   = 8080
   }
 
   network_configuration {
-    // Using public subnet, as private subnet would require NAT Gateway/VPC Endpoints for AWS ECR for fetching images.
-    // Internet Gateway is free but not the NAT Gateway/VPC Endpoint.
-    // Restricting access to the instances can be done by SG itself.
-    // No point in incurring charges for NAT (~ 3 INR/hr) /VPC Endpoint (~ 0.7 INR/hr)just for this assignment.
+ 
     subnets          = module.vpc.public_subnet_ids
     assign_public_ip = true
     security_groups  = [aws_security_group.ecs_container.id]
