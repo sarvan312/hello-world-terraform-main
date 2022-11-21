@@ -34,6 +34,3 @@ docker push <docker_ecr_repo_url>:<version>
 ```bash
 cd infra/accounts/dev/ecs; terraform apply -var="release_version=<release_version>"
 ```
-
-## TODO
-- Use [terragrunt](https://terragrunt.gruntwork.io/) for making terraform code DRY in case new env is added. 
