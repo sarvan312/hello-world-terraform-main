@@ -1,7 +1,15 @@
- # syntax=docker/dockerfile:1
- FROM --platform=linux/amd64 node:12-alpine
- WORKDIR /app
- COPY . .
- RUN yarn install --production
- EXPOSE 3000
- CMD ["node", "index.js"]
+FROM python:3.8-buster
+
+RUN mkdir /app
+
+WORKDIR /app
+
+COPY requirements.txt .
+
+RUN pip install -r requirements.txt
+
+COPY weather.py .
+
+EXPOSE 8080
+
+CMD ["python", "weather.py"]
