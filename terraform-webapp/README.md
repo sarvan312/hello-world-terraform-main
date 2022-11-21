@@ -13,7 +13,7 @@ cd infra/accounts/dev/remote_state; terraform apply
 cd infra/accounts/dev/ecs; terraform apply
 ```
 This will output
-* URL to access the web server.
+* URL to access the web page.
 * ECR repo url where docker images should be pushed.
 
 ## Development
